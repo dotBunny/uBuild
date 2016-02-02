@@ -179,22 +179,24 @@ namespace dotBunny.Unity.BuildSystem
                 Debug.Log(buildMessage);
             }
 
-            // Execute Modifiers
-            if (modifiers != null)
-            {
-                foreach (IModifier m in modifiers)
-                {
-                    Debug.Log(Build.Tag + "[<i>MODIFIER</i>] " + m.GetFriendlyName() + " Post Process ...");
-                    m.PostProcessor();
-                }
-            }
-
+          
+          // TODO: Maybe they should be reversed in the loop itself too? 
             if (routines != null)
             {
                 foreach (IRoutine h in routines)
                 {
                     Debug.Log(Build.Tag + "[<i>ROUTINE</i>] " + h.GetFriendlyName() + " Post Process ...");
                     h.PostProcessor();
+                }
+            }
+            
+              // Execute Modifiers
+            if (modifiers != null)
+            {
+                foreach (IModifier m in modifiers)
+                {
+                    Debug.Log(Build.Tag + "[<i>MODIFIER</i>] " + m.GetFriendlyName() + " Post Process ...");
+                    m.PostProcessor();
                 }
             }
 
