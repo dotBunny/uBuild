@@ -6,9 +6,6 @@
  */
 namespace dotBunny.Unity.BuildSystem
 {
-    using dotBunny.Unity.BuildSystem.Routines;
-    using dotBunny.Unity.BuildSystem.Deployments;
-
     public static class BuildFactory
     {
         public enum Routines

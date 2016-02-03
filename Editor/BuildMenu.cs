@@ -8,8 +8,6 @@ namespace dotBunny.Unity.BuildSystem
 {
     using UnityEditor;
     using UnityEngine;
-    using dotBunny;
-    using dotBunny.Unity.BuildSystem;
     using dotBunny.Unity.BuildSystem.Routines;
     using dotBunny.Unity.BuildSystem.Deployments;
     using dotBunny.Unity.BuildSystem.Modifiers;

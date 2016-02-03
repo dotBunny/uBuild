@@ -6,8 +6,6 @@
  */
 namespace dotBunny.Unity.BuildSystem
 {
-    using System.IO;
-    using UnityEngine;
     using UnityEditor;
 
     public static partial class Preferences

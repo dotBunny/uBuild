@@ -9,17 +9,22 @@ namespace dotBunny.Unity.BuildSystem.Routines
     using System.IO;
 
     internal class XCodeRoutine : IRoutine {
-        public string ProvisioningProfile = "iOS Team Provisioning Profile: com.dotBunny.Cloney";
-        public string SigningAuthority = "iOS Distribution: dotBunny Inc.";
+        public string ProvisioningProfile = "";
+        public string SigningAuthority = "";
         public string ArchiveName = "Upload";
         public string ArchiveFormat = "ipa";
-        
-        
-        
-        public XCodeRoutine(string archiveName, string provisioningProfile)
+
+        public XCodeRoutine()
+        {
+            ArchiveName = Build.ExecutableName;
+            ProvisioningProfile = Settings.IOSProvisioningProfile;
+            SigningAuthority = Settings.IOSSigningAuthority;
+        }
+        public XCodeRoutine(string archiveName, string provisioningProfile, string signingAuthority)
         {
             ArchiveName = archiveName;
             ProvisioningProfile = provisioningProfile;
+            SigningAuthority = signingAuthority;
         }
         
         public bool PreProcessor()
@@ -29,8 +34,6 @@ namespace dotBunny.Unity.BuildSystem.Routines
         
         public bool PostProcessor()
         {
-            UnityEngine.Debug.Log(Build.Tag + "Xcode Routine POST Handler ...");
-           
             // Add struct line
             string targetProblem = "typedef void	(*UnityPluginLoadFunc)(IUnityInterfaces* unityInterfaces);";
             string targetReplace = "typedef void	(*UnityPluginLoadFunc)(struct IUnityInterfaces* unityInterfaces);";

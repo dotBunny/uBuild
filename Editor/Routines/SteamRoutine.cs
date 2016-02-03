@@ -9,7 +9,6 @@ namespace dotBunny.Unity.BuildSystem.Routines
     using UnityEditor;
     using UnityEngine;
     using System.IO;
-    using dotBunny;
 
     internal class SteamRoutine : IRoutine
     {
@@ -64,11 +63,8 @@ namespace dotBunny.Unity.BuildSystem.Routines
             }
         }
 
-
-
         public bool ExecuteUpload = true;
 
-        bool _previousFullscreen = false;
         ResolutionDialogSetting _previousResolutionDialogSettings;
         int _appID;
 
@@ -103,7 +99,7 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
         public string GetFriendlyName()
         {
-            return "Steam Bundle ";
+            return "Steam Depots";
         }
         public BuildFactory.Routines GetRoutineType()
         {

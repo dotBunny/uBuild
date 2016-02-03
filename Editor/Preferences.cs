@@ -16,16 +16,18 @@ namespace dotBunny.Unity.BuildSystem
         const int MAC_TAB = 2;
         const int STEAM_TAB = 3;
         const int APP_STORE_TAB = 4;
+        const int IOS_TAB = 5;
 
         static string[] PreferencesTabNames = new string[] {
             "General Settings",
             "Shared Settings",
             "Mac Settings",
+            "iOS Settings",
             "Steam Deployment",
             "App Store Deployment"
         };
         static int[] PreferencesTabValues = new int[] {
-            GENERAL_TAB, SHARED_TAB, MAC_TAB, STEAM_TAB, APP_STORE_TAB
+            GENERAL_TAB, SHARED_TAB, MAC_TAB, IOS_TAB, STEAM_TAB, APP_STORE_TAB
         };
 
         static Rect _preferencesSettingTab = new Rect(250, 15, 130, 15);
@@ -86,6 +88,9 @@ namespace dotBunny.Unity.BuildSystem
                     break;
                 case APP_STORE_TAB:
                     RenderMacAppStore();
+                    break;
+                case IOS_TAB:
+                    RenderiOSTab();
                     break;
             }
         }

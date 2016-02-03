@@ -433,19 +433,35 @@ namespace dotBunny.Unity.BuildSystem
 
 
 
+        public static string IOSProvisioningProfile
+        {
+            get
+            {
+                return EditorPrefs.GetString("BuildSystem_IOSProvisioningProfile", "");
+            }
+            set
+            {
+                if (IOSProvisioningProfile != value)
+                {
+                    EditorPrefs.SetString("BuildSystem_IOSProvisioningProfile", value);
+                }
+            }
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        public static string IOSSigningAuthority
+        {
+            get
+            {
+                return EditorPrefs.GetString("BuildSystem_IOSSigningAuthority", "");
+            }
+            set
+            {
+                if (IOSSigningAuthority != value)
+                {
+                    EditorPrefs.SetString("BuildSystem_IOSSigningAuthority", value);
+                }
+            }
+        }
 
 
 

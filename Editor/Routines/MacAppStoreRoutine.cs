@@ -23,6 +23,11 @@ namespace dotBunny.Unity.BuildSystem.Routines
         bool _previousFullscreen = false;
         ResolutionDialogSetting _previousResolutionDialogSettings;
         
+        public MacAppStoreRoutine()
+        {
+            PackageName = Build.ExecutableName + ".pkg";
+        }
+        
         public MacAppStoreRoutine(string ownerUser, string ownerGroup)
         {
             Owner = ownerUser + ":" + ownerGroup;
@@ -63,7 +68,7 @@ namespace dotBunny.Unity.BuildSystem.Routines
             // Remove CSteamworks (have to have it set to include on OSX - but dont want it on Mac Store
             string SteamworksPath = Utilities.CombinePath(AppPath, "Contents", "Plugins", "CSteamworks.bundle");
             if ( Directory.Exists(SteamworksPath) ) {
-                Stewie.SafeDeleteDirectory(SteamworksPath); 
+                FileUtil.DeleteFileOrDirectory(SteamworksPath); 
             }
             
             // Copy over the provisioning profile for embeding
@@ -74,7 +79,7 @@ namespace dotBunny.Unity.BuildSystem.Routines
             
             // Change Permissions
             //BuildSystem.CommandLine("chmod", "-R a+xr " + BuildSystem.ExecutableName + ".app", WorkingFolder + Path.DirectorySeparatorChar, false);
-            Utilities.CommandLine("chmod", "-RH u+w,go-w,a+rX " + Build.ExecutableName + ".app", Build.WorkingFolder + Path.DirectorySeparatorChar, false);
+            Utilities.CommandLine("chmod", "-RH u+w,go-w,a+rX " + Build.ExecutableName + ".app", Build.WorkingFolder, false);
             //system("/usr/sbin/chown -RH \"reapazor:staff\" \"$jEntitlementsPublishFile\" 2>> \"$jEntitlementsPublishFileName.log\"");
 
             // Delete all meta files / .DS_Stores / etc

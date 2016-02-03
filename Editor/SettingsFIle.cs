@@ -6,9 +6,6 @@
 */
 namespace dotBunny.Unity.BuildSystem
 {
-    using System.IO;
-    using UnityEngine;
-    using UnityEditor;
     [System.Serializable]
     public class SettingsFile
     {
@@ -41,6 +38,10 @@ namespace dotBunny.Unity.BuildSystem
         public string AppleDeveloperPassword;
         public string AppleApplicationLoaderToolPath;
         public bool AppleApplicationLoaderPathRelative;
+
+
+        public string IOSProvisioningProfile;
+        public string IOSSigningAuthority;
 
         public string SteamSDKFolder;
         public bool SteamSDKFolderRelative;
@@ -90,6 +91,10 @@ namespace dotBunny.Unity.BuildSystem
             Settings.MacScreenSelectorPath = this.MacScreenSelectorPath;
             Settings.MacScreenSelectorPathRelative = this.MacScreenSelectorPathRelative;
 
+            Settings.IOSProvisioningProfile = this.IOSProvisioningProfile;
+            Settings.IOSSigningAuthority = this.IOSSigningAuthority;
+
+
             Settings.AppleApplicationLoaderPathRelative = this.AppleApplicationLoaderPathRelative;
             Settings.AppleDeveloperUsername = this.AppleDeveloperUsername;
             Settings.AppleDeveloperPassword = this.AppleDeveloperPassword;
@@ -136,6 +141,9 @@ namespace dotBunny.Unity.BuildSystem
             this.MacIconPathRelative = Settings.MacIconPathRelative;
             this.MacScreenSelectorPath = Settings.MacScreenSelectorPath;
             this.MacScreenSelectorPathRelative = Settings.MacScreenSelectorPathRelative;
+
+            this.IOSProvisioningProfile = Settings.IOSProvisioningProfile;
+            this.IOSSigningAuthority = Settings.IOSSigningAuthority;
 
             this.AppleApplicationLoaderPathRelative = Settings.AppleApplicationLoaderPathRelative;
             this.AppleDeveloperUsername = Settings.AppleDeveloperUsername;

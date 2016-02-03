@@ -36,8 +36,9 @@ namespace dotBunny.Unity.BuildSystem
                 EditorApplication.delayCall += SelectMacIconPath;;
             }
             EditorGUILayout.EndHorizontal();
-            
-            
+
+            EditorGUILayout.Space();
+
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(new GUIContent("Mac Screen Selector (TIF)", "The Screen Selector image shown on the configuration screen."), EditorStyles.boldLabel, GUILayout.Width(150));
             GUILayout.FlexibleSpace();
