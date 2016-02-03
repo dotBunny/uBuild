@@ -89,12 +89,11 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
         public bool PreProcessor()
         {
+            // Disable configuration window by default, better for Steam Link, etc.
             _previousResolutionDialogSettings = PlayerSettings.displayResolutionDialog;
             PlayerSettings.displayResolutionDialog = ResolutionDialogSetting.HiddenByDefault;
 
-            _previousFullscreen = PlayerSettings.defaultIsFullScreen;
-            // PlayerSettings.defaultIsFullScreen = true;
-
+            // Turn off Mac Store Validation for sure
             _previousMacStoreValidation = PlayerSettings.useMacAppStoreValidation;
             PlayerSettings.useMacAppStoreValidation = false;
 
@@ -104,7 +103,7 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
         public string GetFriendlyName()
         {
-            return "Steam API Library";
+            return "Steam Bundle ";
         }
         public BuildFactory.Routines GetRoutineType()
         {
@@ -114,7 +113,6 @@ namespace dotBunny.Unity.BuildSystem.Routines
         {
             // Remove resolution dialog settings
             PlayerSettings.displayResolutionDialog = _previousResolutionDialogSettings;
-            PlayerSettings.defaultIsFullScreen = _previousFullscreen;
             PlayerSettings.useMacAppStoreValidation = _previousMacStoreValidation;
 
             // Copy Libraries To Root (for Windows)
@@ -170,7 +168,6 @@ namespace dotBunny.Unity.BuildSystem.Routines
                 Directory.CreateDirectory(Build.WorkingFolder);
 
                 // Copy Temp to Original
-                
                 Utilities.DirectoryCopy(tempFolder, Build.WorkingFolder, true);
 
                 // Remove Temp

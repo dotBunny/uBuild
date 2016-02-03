@@ -28,16 +28,14 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
         public bool PostProcessor()
         {
-            UnityEngine.Debug.Log(Build.Tag + "Prime31 Routine POST Handler ...");
-
             // Remove mono bridge from project file (legacy safety check)
-            Utilities.RemoveAllFilesRecursive(Build.WorkingFolder + Path.DirectorySeparatorChar, "libP31MonoBridge*");
+            Utilities.RemoveAllFilesRecursive(Build.WorkingFolder, "libP31MonoBridge*");
 
             // Remove entry from project file
             List<string> projectFile = new List<string>();
 
             // Project File Path
-            string filePath = Build.WorkingFolder + Path.DirectorySeparatorChar + "Unity-iPhone.xcodeproj" + Path.DirectorySeparatorChar + "project.pbxproj";
+            string filePath = Utilities.CombinePath(Build.WorkingFolder, "Unity-iPhone.xcodeproj", "project.pbxproj");
             
             string[] contents = File.ReadAllLines(filePath);
 
