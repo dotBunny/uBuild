@@ -21,7 +21,7 @@ namespace dotBunny.Unity.BuildSystem
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             Settings.SteamSDKFolder = EditorGUILayout.TextField(Settings.SteamSDKFolder);
-            if (GUILayout.Button("...", EditorStyles.miniButton, GUILayout.Width(25), GUILayout.Height(20)))
+            if (GUILayout.Button("...", EditorStyles.miniButton, GUILayout.Width(20)))
             {
                 EditorApplication.delayCall += SelectSteamSDKFolder;
             }
@@ -42,14 +42,12 @@ namespace dotBunny.Unity.BuildSystem
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             Settings.SteamScriptPath = EditorGUILayout.TextField(Settings.SteamScriptPath);
-            if (GUILayout.Button("...", EditorStyles.miniButton, GUILayout.Width(25), GUILayout.Height(20)))
+            if (GUILayout.Button("...", EditorStyles.miniButton, GUILayout.Width(20)))
             {
                 EditorApplication.delayCall += SelectSteamBuildScript;
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space();
-
-            Settings.SteamDefine = EditorGUILayout.TextField("Compile Define", Settings.SteamDefine);
 
         }
 
