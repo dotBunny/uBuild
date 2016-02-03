@@ -536,16 +536,5 @@ namespace dotBunny.Unity.BuildSystem
                 EditorPrefs.SetInt("BuildSystem_SteamAppID", value);
             }
         }
-        public static string SteamDefine
-        {
-            get
-            {
-                return EditorPrefs.GetString("BuildSystem_SteamDefine", "STEAM");
-            }
-            set
-            {
-                EditorPrefs.SetString("BuildSystem_SteamDefine", value);
-            }
-        }
     }
 }

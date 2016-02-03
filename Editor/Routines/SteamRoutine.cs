@@ -15,15 +15,24 @@ namespace dotBunny.Unity.BuildSystem.Routines
     {
         public static string SteamworksFolder
         {
-            get { return Build.BuildExtrasFolder + Path.DirectorySeparatorChar + "Steamworks"; }
+            get
+            {
+                if (Settings.SteamSDKFolderRelative)
+                {
+                    return Utilities.GetAbsolutePath(Settings.SteamSDKFolder);
+                }
+                else
+                {
+                    return Settings.SteamSDKFolder;
+                }
+            }
         }
 
         public static string RedistributableFolder
         {
             get
-            {                
-                return SteamworksFolder + Path.DirectorySeparatorChar + "sdk" +
-                Path.DirectorySeparatorChar + "redistributable_bin";
+            {
+                return Utilities.CombinePath(SteamworksFolder, "redistributable_bin");
             }
         }
 
@@ -31,9 +40,7 @@ namespace dotBunny.Unity.BuildSystem.Routines
         {
             get
             {
-                return SteamworksFolder + Path.DirectorySeparatorChar + "sdk" + Path.DirectorySeparatorChar +
-                "tools" + Path.DirectorySeparatorChar + "ContentPrep.app" + Path.DirectorySeparatorChar +
-                "Contents" + Path.DirectorySeparatorChar + "MacOS" + Path.DirectorySeparatorChar + "contentprep.py";
+                return Utilities.CombinePath(SteamworksFolder, "tools", "ContentPrep.app", "Contents", "MacOS", "contentprep.py");
             }
         }
 
@@ -43,16 +50,17 @@ namespace dotBunny.Unity.BuildSystem.Routines
             switch (target)
             {
                 case BuildTarget.StandaloneWindows64:
-                    return RedistributableFolder + Path.DirectorySeparatorChar + "win64";
+                    return Utilities.CombinePath(RedistributableFolder, "win64");
                 case BuildTarget.StandaloneOSXIntel:
-                    return RedistributableFolder + Path.DirectorySeparatorChar + "osx32";
+                case BuildTarget.StandaloneOSXIntel64:
+                    return Utilities.CombinePath(RedistributableFolder, "osx32");
                 case BuildTarget.StandaloneLinux:
-                    return RedistributableFolder + Path.DirectorySeparatorChar + "linux32";
+                    return Utilities.CombinePath(RedistributableFolder,"linux32");
                 case BuildTarget.StandaloneLinux64:
-                    return RedistributableFolder + Path.DirectorySeparatorChar + "linux64";
+                    return Utilities.CombinePath(RedistributableFolder, "linux64");
                 case BuildTarget.StandaloneWindows:
                 default:
-                    return RedistributableFolder + Path.DirectorySeparatorChar + "win32";
+                    return Utilities.CombinePath(RedistributableFolder, "win32");
             }
         }
 
@@ -81,11 +89,6 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
         public bool PreProcessor()
         {
-            UnityEngine.Debug.Log(Build.Tag + "Steam Routine PRE Routine for " + Build.WorkingTarget.ToString() + " ... ");
-            
-            // Add Defines To Build
-            
-
             _previousResolutionDialogSettings = PlayerSettings.displayResolutionDialog;
             PlayerSettings.displayResolutionDialog = ResolutionDialogSetting.HiddenByDefault;
 
@@ -109,43 +112,38 @@ namespace dotBunny.Unity.BuildSystem.Routines
         }
         public bool PostProcessor()
         {
-            UnityEngine.Debug.Log(Build.Tag + "Steam Routine POST Routine for " + Build.WorkingTarget.ToString() + " ... ");
-
-
             // Remove resolution dialog settings
             PlayerSettings.displayResolutionDialog = _previousResolutionDialogSettings;
             PlayerSettings.defaultIsFullScreen = _previousFullscreen;
             PlayerSettings.useMacAppStoreValidation = _previousMacStoreValidation;
-            // TODO: Remove DS STORE FILES
 
-
-
-            // Copy Libraries To Root
+            // Copy Libraries To Root (for Windows)
             if (Build.WorkingTarget == BuildTarget.StandaloneWindows)
             {
-                File.Copy(GetRedistributableFolder(Build.WorkingTarget) + Path.DirectorySeparatorChar + "steam_api.dll", Build.WorkingFolder + Path.DirectorySeparatorChar + "steam_api.dll", true);
+                FileUtil.CopyFileOrDirectory(
+                    Utilities.CombinePath(GetRedistributableFolder(Build.WorkingTarget), "steam_api.dll"), 
+                    Utilities.CombinePath(Build.WorkingFolder,"steam_api.dll"));
             }
             else if (Build.WorkingTarget == BuildTarget.StandaloneWindows64)
             {
-                File.Copy(GetRedistributableFolder(Build.WorkingTarget) + Path.DirectorySeparatorChar + "steam_api64.dll", Build.WorkingFolder + Path.DirectorySeparatorChar + "steam_api64.dll", true);
+                FileUtil.CopyFileOrDirectory(
+                    Utilities.CombinePath(GetRedistributableFolder(Build.WorkingTarget), "steam_api64.dll"),
+                    Utilities.CombinePath(Build.WorkingFolder, "steam_api64.dll"));
             }
-
-            // Dont have to do mac / or linux?
-
-
 
 
             // Mac Content Prep
-            if (Build.WorkingTarget == BuildTarget.StandaloneOSXIntel || Build.WorkingTarget == BuildTarget.StandaloneOSXIntel64)
+            if (Build.WorkingTarget == BuildTarget.StandaloneOSXIntel || 
+                Build.WorkingTarget == BuildTarget.StandaloneOSXIntel64)
             {
                 // This is used for additional things
-                string tempFolder = Build.GetBuildFolder(Build.WorkingTarget, Build.Tag + "_TEMP");
+                string tempFolder = Build.GetBuildFolder(Build.WorkingTarget, Build.WorkingTag + "_TEMP");
 
                 // Remove folder contents
                 // If the destination directory doesn't exist, create it. 
                 if (Directory.Exists(tempFolder))
                 {
-                    Stewie.SafeDeleteDirectory(tempFolder);
+                    FileUtil.DeleteFileOrDirectory(tempFolder);
                 }
 
                 // Create Empty Folder
@@ -156,28 +154,29 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
                 // Execute Contenet Prep Script - Unity Scripts do not need wrapping
                 string arguements = " --console -v --nowrap --app " + _appID +
-                     " --source " + Build.GetUnityBuildPath(Build.WorkingTarget, Build.Tag) + " --dest " +
+                     " --source " + Build.GetUnityBuildPath(Build.WorkingTarget, Build.WorkingTag) + " --dest " +
                      tempFolder + Path.DirectorySeparatorChar;
 
                 // Execute Content Prep
                 string output = Utilities.CommandLine(ContentPrepCommand, arguements, Build.WorkingFolder, true);
-                Debug.Log(output);
+                Debug.Log(Build.Tag + output);
 
                 // Remove Original Directory
                 if (Directory.Exists(Build.WorkingFolder))
                 {
-                    Stewie.SafeDeleteDirectory(Build.WorkingFolder);
+                    FileUtil.DeleteFileOrDirectory(Build.WorkingFolder);
                 }
 
                 Directory.CreateDirectory(Build.WorkingFolder);
 
                 // Copy Temp to Original
+                
                 Utilities.DirectoryCopy(tempFolder, Build.WorkingFolder, true);
 
                 // Remove Temp
                 if (Directory.Exists(tempFolder))
                 {
-                    Stewie.SafeDeleteDirectory(tempFolder);
+                    FileUtil.DeleteFileOrDirectory(tempFolder);
                 }
             }
             return true;

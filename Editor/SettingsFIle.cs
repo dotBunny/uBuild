@@ -49,7 +49,8 @@ namespace dotBunny.Unity.BuildSystem
         public string SteamScriptPath;
         public bool SteamScriptPathRelative;
         public int SteamAppID;
-        public string SteamDefine;
+        
+        
 
         public bool IncrementBuildNumberOnTargetBuild;
         public bool IncrementBuildNumberOnTargetGroupBuild;
@@ -103,7 +104,6 @@ namespace dotBunny.Unity.BuildSystem
             Settings.SteamAppID = this.SteamAppID;
             Settings.SteamScriptPath = this.SteamScriptPath;
             Settings.SteamScriptPathRelative = this.SteamScriptPathRelative;
-            Settings.SteamDefine = this.SteamDefine;
         }
 
         public void Read()
@@ -150,7 +150,6 @@ namespace dotBunny.Unity.BuildSystem
             this.SteamAppID = Settings.SteamAppID;
             this.SteamScriptPath = Settings.SteamScriptPath;
             this.SteamScriptPathRelative = Settings.SteamScriptPathRelative;
-            this.SteamDefine = Settings.SteamDefine;
         }
     }
 }
