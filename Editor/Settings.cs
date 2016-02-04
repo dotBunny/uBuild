@@ -464,9 +464,6 @@ namespace dotBunny.Unity.BuildSystem
             }
         }
 
-
-
-
         public static string AppleDeveloperName
         {
             get

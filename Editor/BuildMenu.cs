@@ -114,6 +114,15 @@ namespace dotBunny.Unity.BuildSystem
             Build.BuildPlayer(BuildTarget.WebGL, string.Empty, modifiers, null);
         }
 
+        [MenuItem("File/uBuild/Build for Target/iOS", false, 200)]
+        public static void BuildForIOS()
+        {
+            List<IModifier> modifiers = new List<IModifier>();
+
+            modifiers.Add(new BuildInfoModifier());
+
+            Build.BuildPlayer(BuildTarget.iOS, string.Empty, modifiers, null);
+        }
 
 
 
