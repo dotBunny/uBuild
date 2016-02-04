@@ -11,10 +11,40 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
     internal class MacAppStoreRoutine : IRoutine {
 
-        public string ProvisionProfileFilename = "appstore.provisionprofile";
-        public string EntitlementsFilename = "game.entitlements";
-        public string Owner = "reapazor:staff";
-        public string DeveloperName = "dotBunny Inc. (HQKPKDQ68P)";
+        static string ProvisionProfile
+        {
+            get
+            {
+                if (Settings.MacProvisioningProfilePathRelative)
+                {
+                    return Utilities.GetAbsolutePath(Settings.MacProvisioningProfilePath);
+                }
+                else
+                {
+                    return Settings.MacProvisioningProfilePath;
+                }
+            }
+        }
+        static string Entitlements
+        {
+            get
+            {
+                if (Settings.MacEntitlementsPathRelative)
+                {
+                    return Utilities.GetAbsolutePath(Settings.MacEntitlementsPath);
+                }
+                else
+                {
+                    return Settings.MacEntitlementsPath;
+                }
+            }
+        }
+        
+        
+        public string ProvisionProfilePath;
+        public string EntitlementsPath;
+        public string Owner = "";
+        public string DeveloperName = "";
 
         public static string PackageName = "Upload.pkg";
 
@@ -26,11 +56,18 @@ namespace dotBunny.Unity.BuildSystem.Routines
         public MacAppStoreRoutine()
         {
             PackageName = Build.ExecutableName + ".pkg";
+            Owner = Settings.MacFileOwner + ":" + Settings.MacFileGroup;
+            ProvisionProfilePath = ProvisionProfile;
+            EntitlementsPath = Entitlements;
+            DeveloperName = Settings.AppleDeveloperName;
         }
         
-        public MacAppStoreRoutine(string ownerUser, string ownerGroup)
+        public MacAppStoreRoutine(string ownerUser, string ownerGroup, string provisionPath, string entitlementsPath)
         {
             Owner = ownerUser + ":" + ownerGroup;
+            ProvisionProfilePath = provisionPath;
+            EntitlementsPath = entitlementsPath;
+            DeveloperName = Settings.AppleDeveloperName;
         }
         
         
@@ -62,7 +99,7 @@ namespace dotBunny.Unity.BuildSystem.Routines
             PlayerSettings.displayResolutionDialog = _previousResolutionDialogSettings;
             PlayerSettings.defaultIsFullScreen = _previousFullscreen;
 
-            string AppPath = Utilities.CombinePath(Build.WorkingFolder, Build.ExecutableName, ".app");
+            string AppPath = Utilities.CombinePath(Build.WorkingFolder, Build.ExecutableName + ".app");
 
 
             // Remove CSteamworks (have to have it set to include on OSX - but dont want it on Mac Store
@@ -72,10 +109,7 @@ namespace dotBunny.Unity.BuildSystem.Routines
             }
             
             // Copy over the provisioning profile for embeding
-            File.Copy ( 
-                Build.BuildExtrasFolder + Path.DirectorySeparatorChar + "OSX" + Path.DirectorySeparatorChar + ProvisionProfileFilename, 
-                AppPath + Path.DirectorySeparatorChar +"Contents" + Path.DirectorySeparatorChar + "embedded.provisionprofile", 
-                true);
+            File.Copy (ProvisionProfilePath, Utilities.CombinePath(AppPath, "Contents", "embedded.provisionprofile"), true);
             
             // Change Permissions
             //BuildSystem.CommandLine("chmod", "-R a+xr " + BuildSystem.ExecutableName + ".app", WorkingFolder + Path.DirectorySeparatorChar, false);
@@ -87,11 +121,11 @@ namespace dotBunny.Unity.BuildSystem.Routines
             Utilities.RemoveAllFilesRecursive(AppPath + Path.DirectorySeparatorChar, ".DS_Store");
 
             // Code Sign Plugins
-            string pluginsFolder = AppPath + Path.DirectorySeparatorChar + "Contents" + Path.DirectorySeparatorChar + "Plugins";
+            string pluginsFolder = Utilities.CombinePath(AppPath, "Contents", "Plugins");
             CodeSignFolder(pluginsFolder);
 
             // Code Sign Frameworks
-            string frameworksFolder = AppPath + Path.DirectorySeparatorChar + "Contents" + Path.DirectorySeparatorChar + "Frameworks";
+            string frameworksFolder = Utilities.CombinePath(AppPath, "Contents", "Frameworks");
             CodeSignFolder(frameworksFolder);
             
              // Code Sign App
@@ -109,18 +143,14 @@ namespace dotBunny.Unity.BuildSystem.Routines
 
         void CodeSign(string path, bool deep = false)
         {
-            // NOTE ALWAYS MAKE SURE YOUR OLD CERTS ARE GONE AND NOT AMBIGUOUS
-            string EntitlementsPath = 
-                Build.BuildExtrasFolder + Path.DirectorySeparatorChar + 
-                "OSX" + Path.DirectorySeparatorChar + EntitlementsFilename;
-                
+            // NOTE ALWAYS MAKE SURE YOUR OLD CERTS ARE GONE AND NOT AMBIGUOUS                
             if ( deep ) {
-                Utilities.CommandLine("codesign", "-f --deep -s '3rd Party Mac Developer Application: " + DeveloperName + "' --verbose --entitlements \"" + EntitlementsPath + "\" " + path,
+                Utilities.CommandLine("codesign", "-f --deep -s '3rd Party Mac Developer Application: " + DeveloperName + "' --verbose --entitlements \"" + Entitlements + "\" " + path,
                     Build.WorkingFolder + Path.DirectorySeparatorChar, false);
             }
             else
             {
-                Utilities.CommandLine("codesign", "-f -s '3rd Party Mac Developer Application: " + DeveloperName + "' --verbose --entitlements \"" + EntitlementsPath + "\" " + path,
+                Utilities.CommandLine("codesign", "-f -s '3rd Party Mac Developer Application: " + DeveloperName + "' --verbose --entitlements \"" + Entitlements + "\" " + path,
                     Build.WorkingFolder + Path.DirectorySeparatorChar, false);
             }
 

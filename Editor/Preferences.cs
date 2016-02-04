@@ -87,7 +87,7 @@ namespace dotBunny.Unity.BuildSystem
                     RenderSteamTab();
                     break;
                 case APP_STORE_TAB:
-                    RenderMacAppStore();
+                    RenderAppStore();
                     break;
                 case IOS_TAB:
                     RenderiOSTab();

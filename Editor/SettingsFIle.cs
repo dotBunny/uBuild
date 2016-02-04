@@ -33,7 +33,14 @@ namespace dotBunny.Unity.BuildSystem
         public bool MacIconPathRelative;
         public string MacScreenSelectorPath;
         public bool MacScreenSelectorPathRelative;
+        public string MacFileOwner;
+        public string MacFileGroup;
+        public string MacProvisioningProfilePath;
+        public bool MacProvisioningProfilePathRelative;
+        public string MacEntitlementsPath;
+        public bool MacEntitlementsPathRelative;
 
+        public string AppleDeveloperName;
         public string AppleDeveloperUsername;
         public string AppleDeveloperPassword;
         public string AppleApplicationLoaderToolPath;
@@ -90,12 +97,19 @@ namespace dotBunny.Unity.BuildSystem
             Settings.MacIconPathRelative = this.MacIconPathRelative;
             Settings.MacScreenSelectorPath = this.MacScreenSelectorPath;
             Settings.MacScreenSelectorPathRelative = this.MacScreenSelectorPathRelative;
+            Settings.MacFileOwner = this.MacFileOwner;
+            Settings.MacFileGroup = this.MacFileGroup;
+            Settings.MacProvisioningProfilePath = this.MacProvisioningProfilePath;
+            Settings.MacProvisioningProfilePathRelative = this.MacProvisioningProfilePathRelative;
+            Settings.MacEntitlementsPath = this.MacEntitlementsPath;
+            Settings.MacEntitlementsPathRelative = this.MacEntitlementsPathRelative;
 
             Settings.IOSProvisioningProfile = this.IOSProvisioningProfile;
             Settings.IOSSigningAuthority = this.IOSSigningAuthority;
 
 
             Settings.AppleApplicationLoaderPathRelative = this.AppleApplicationLoaderPathRelative;
+            Settings.AppleDeveloperName = this.AppleDeveloperName;
             Settings.AppleDeveloperUsername = this.AppleDeveloperUsername;
             Settings.AppleDeveloperPassword = this.AppleDeveloperPassword;
             Settings.AppleApplicationLoaderToolPath = this.AppleApplicationLoaderToolPath;
@@ -141,11 +155,18 @@ namespace dotBunny.Unity.BuildSystem
             this.MacIconPathRelative = Settings.MacIconPathRelative;
             this.MacScreenSelectorPath = Settings.MacScreenSelectorPath;
             this.MacScreenSelectorPathRelative = Settings.MacScreenSelectorPathRelative;
+            this.MacFileOwner = Settings.MacFileOwner;
+            this.MacFileGroup = Settings.MacFileGroup;
+            this.MacProvisioningProfilePath = Settings.MacProvisioningProfilePath;
+            this.MacProvisioningProfilePathRelative = Settings.MacProvisioningProfilePathRelative;
+            this.MacEntitlementsPath = Settings.MacEntitlementsPath;
+            this.MacEntitlementsPathRelative = Settings.MacEntitlementsPathRelative;
 
             this.IOSProvisioningProfile = Settings.IOSProvisioningProfile;
             this.IOSSigningAuthority = Settings.IOSSigningAuthority;
 
             this.AppleApplicationLoaderPathRelative = Settings.AppleApplicationLoaderPathRelative;
+            this.AppleDeveloperName = Settings.AppleDeveloperName;
             this.AppleDeveloperUsername = Settings.AppleDeveloperUsername;
             this.AppleDeveloperPassword = Settings.AppleDeveloperPassword;
             this.AppleApplicationLoaderToolPath = Settings.AppleApplicationLoaderToolPath;

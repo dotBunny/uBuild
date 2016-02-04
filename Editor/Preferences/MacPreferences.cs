@@ -23,6 +23,8 @@ namespace dotBunny.Unity.BuildSystem
             Settings.MacBundleIdentifier = EditorGUILayout.DelayedTextField("Bundle Identifier", Settings.MacBundleIdentifier);
             Settings.MacCategory = EditorGUILayout.DelayedTextField("Category", Settings.MacCategory);
             Settings.MacGetInfoString = EditorGUILayout.DelayedTextField("GetInfo() String", Settings.MacGetInfoString);
+
+            EditorGUILayout.Space();
             
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(new GUIContent("Mac Icon File (ICNS)", "The Mac ICNS file that will be copied into the compiled application"), EditorStyles.boldLabel, GUILayout.Width(150));

@@ -376,6 +376,108 @@ namespace dotBunny.Unity.BuildSystem
             }
         }
 
+        public static string MacFileOwner
+        {
+            get
+            {
+                return EditorPrefs.GetString("BuildSystem_MacFileOwner", System.Environment.UserName);
+            }
+            set
+            {
+                if (MacFileOwner != value)
+                {
+                    EditorPrefs.SetString("BuildSystem_MacFileOwner", value);
+                }
+            }
+        }
+
+        public static string MacFileGroup
+        {
+            get
+            {
+                return EditorPrefs.GetString("BuildSystem_MacFileGroup", "staff");
+            }
+            set
+            {
+                if (MacFileGroup != value)
+                {
+                    EditorPrefs.SetString("BuildSystem_MacFileGroup", value);
+                }
+            }
+        }
+
+        public static string MacProvisioningProfilePath
+        {
+            get
+            {
+                return EditorPrefs.GetString("BuildSystem_MacProvisioningProfilePath", "");
+            }
+            set
+            {
+                if (MacProvisioningProfilePath != value)
+                {
+                    EditorPrefs.SetString("BuildSystem_MacProvisioningProfilePath", value);
+                }
+            }
+        }
+        public static bool MacProvisioningProfilePathRelative
+        {
+            get
+            {
+                return EditorPrefs.GetBool("BuildSystem_MacProvisioningProfilePathRelative", false);
+            }
+            set
+            {
+                if (MacProvisioningProfilePathRelative != value)
+                {
+                    EditorPrefs.SetBool("BuildSystem_MacProvisioningProfilePathRelative", value);
+                }
+            }
+        }
+
+        public static string MacEntitlementsPath
+        {
+            get
+            {
+                return EditorPrefs.GetString("BuildSystem_MacEntitlementsPath", "");
+            }
+            set
+            {
+                if (MacEntitlementsPath != value)
+                {
+                    EditorPrefs.SetString("BuildSystem_MacEntitlementsPath", value);
+                }
+            }
+        }
+        public static bool MacEntitlementsPathRelative
+        {
+            get
+            {
+                return EditorPrefs.GetBool("BuildSystem_MacEntitlementsPathRelative", false);
+            }
+            set
+            {
+                if (MacEntitlementsPathRelative != value)
+                {
+                    EditorPrefs.SetBool("BuildSystem_MacEntitlementsPathRelative", value);
+                }
+            }
+        }
+
+
+
+
+        public static string AppleDeveloperName
+        {
+            get
+            {
+                return EditorPrefs.GetString("BuildSystem_AppleDeveloperName", "");
+            }
+            set
+            {
+                EditorPrefs.SetString("BuildSystem_AppleDeveloperName", value);
+            }
+        }
         public static string AppleDeveloperUsername
         {
             get

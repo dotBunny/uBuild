@@ -18,7 +18,7 @@ namespace dotBunny.Unity.BuildSystem
 
         // NORMAL BUILDS
 
-        [MenuItem("File/uBuild/Build for Target/Desktop/Windows 32-bit")]
+        [MenuItem("File/uBuild/Build for Target/Desktop/Windows 32-bit", false, 200)]
         public static void BuildForStandaloneWindows32()
         {
             // Increment Build?
@@ -32,7 +32,7 @@ namespace dotBunny.Unity.BuildSystem
             Build.BuildPlayer(BuildTarget.StandaloneWindows, string.Empty, modifiers, null);
         }
 
-        [MenuItem("File/uBuild/Build for Target/Desktop/Windows 64-bit")]
+        [MenuItem("File/uBuild/Build for Target/Desktop/Windows 64-bit", false, 200)]
         public static void BuildForStandaloneWindows64()
         {
             // Increment Build?
@@ -47,7 +47,7 @@ namespace dotBunny.Unity.BuildSystem
         }
 
 
-        [MenuItem("File/uBuild/Build for Target/Desktop/OSX 32-bit")]
+        [MenuItem("File/uBuild/Build for Target/Desktop/OSX 32-bit", false, 200)]
         public static void BuildForOSX32()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -59,7 +59,7 @@ namespace dotBunny.Unity.BuildSystem
             Build.BuildPlayer(BuildTarget.StandaloneOSXIntel, string.Empty, modifiers, routines);
         }
 
-        [MenuItem("File/uBuild/Build for Target/Desktop/OSX 64-bit")]
+        [MenuItem("File/uBuild/Build for Target/Desktop/OSX 64-bit", false, 200)]
         public static void BuildForOSX64()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -71,7 +71,7 @@ namespace dotBunny.Unity.BuildSystem
             Build.BuildPlayer(BuildTarget.StandaloneOSXIntel64, string.Empty, modifiers, routines);
         }
 
-        [MenuItem("File/uBuild/Build for Target/Desktop/Linux 32-bit")]
+        [MenuItem("File/uBuild/Build for Target/Desktop/Linux 32-bit", false, 200)]
         public static void BuildForLinux32()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -81,7 +81,7 @@ namespace dotBunny.Unity.BuildSystem
             Build.BuildPlayer(BuildTarget.StandaloneLinux, string.Empty, modifiers, null);
         }
 
-        [MenuItem("File/uBuild/Build for Target/Desktop/Linux 64-bit")]
+        [MenuItem("File/uBuild/Build for Target/Desktop/Linux 64-bit", false, 200)]
         public static void BuildForLinux64()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -90,8 +90,21 @@ namespace dotBunny.Unity.BuildSystem
 
             Build.BuildPlayer(BuildTarget.StandaloneLinux64, string.Empty, modifiers, null);
         }
+        
+        [MenuItem("File/uBuild/Build for Target/Desktop/All", false, 225)]
+        public static void BuildForStandaloneAll()
+        {
+            Debug.Log(Build.Tag + "Starting Desktop Group Build ...");
+            BuildForStandaloneWindows32();
+            BuildForStandaloneWindows64();
+            BuildForOSX32();
+            BuildForOSX64();
+            BuildForLinux32();
+            BuildForLinux64();
+            Debug.Log(Build.Tag + "Finished Desktop Group Build.");
+        }
 
-        [MenuItem("File/uBuild/Build for Target/Web GL")]
+        [MenuItem("File/uBuild/Build for Target/Web GL", false, 200)]
         public static void BuildForWebGL()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -105,7 +118,7 @@ namespace dotBunny.Unity.BuildSystem
 
 
         // STEAM BUILDS
-        [MenuItem("File/uBuild/Build for Deployment/Steam/Windows 32-bit")]
+        [MenuItem("File/uBuild/Build for Deployment/Steam/Windows 32-bit", false, 200)]
         public static void BuildForSteamWindows32()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -119,7 +132,7 @@ namespace dotBunny.Unity.BuildSystem
 
             Build.BuildPlayer(BuildTarget.StandaloneWindows, "steam", modifiers, routines);
         }
-        [MenuItem("File/uBuild/Build for Deployment/Steam/Windows 64-bit")]
+        [MenuItem("File/uBuild/Build for Deployment/Steam/Windows 64-bit", false, 200)]
         public static void BuildForSteamWindows64()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -133,7 +146,7 @@ namespace dotBunny.Unity.BuildSystem
 
             Build.BuildPlayer(BuildTarget.StandaloneWindows64, "steam", modifiers, routines);
         }
-        [MenuItem("File/uBuild/Build for Deployment/Steam/OSX 32-bit")]
+        [MenuItem("File/uBuild/Build for Deployment/Steam/OSX 32-bit", false, 200)]
         public static void BuildForSteamOSX32()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -148,7 +161,7 @@ namespace dotBunny.Unity.BuildSystem
 
             Build.BuildPlayer(BuildTarget.StandaloneOSXIntel, "steam", modifiers, routines);
         }
-        [MenuItem("File/uBuild/Build for Deployment/Steam/OSX 64-bit")]
+        [MenuItem("File/uBuild/Build for Deployment/Steam/OSX 64-bit", false, 200)]
         public static void BuildForSteamOSX64()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -163,7 +176,7 @@ namespace dotBunny.Unity.BuildSystem
 
             Build.BuildPlayer(BuildTarget.StandaloneOSXIntel64, "steam", modifiers, routines);
         }
-        [MenuItem("File/uBuild/Build for Deployment/Steam/Linux 32-bit")]
+        [MenuItem("File/uBuild/Build for Deployment/Steam/Linux 32-bit", false, 200)]
         public static void BuildForSteamLinux32()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -177,7 +190,7 @@ namespace dotBunny.Unity.BuildSystem
 
             Build.BuildPlayer(BuildTarget.StandaloneLinux, "steam", modifiers, routines);
         }
-        [MenuItem("File/uBuild/Build for Deployment/Steam/Linux 64-bit")]
+        [MenuItem("File/uBuild/Build for Deployment/Steam/Linux 64-bit", false, 200)]
         public static void BuildForSteamLinux64()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -192,7 +205,7 @@ namespace dotBunny.Unity.BuildSystem
             Build.BuildPlayer(BuildTarget.StandaloneLinux64, "steam", modifiers, routines);
         }
         
-         [MenuItem("File/uBuild/Build for Deployment/Steam/All", false, 100)]
+         [MenuItem("File/uBuild/Build for Deployment/Steam/All", false, 259)]
         public static void BuildForSteamGroup()
         {
             Debug.Log(Build.Tag + "Starting Steam Group Build ...");
@@ -207,7 +220,7 @@ namespace dotBunny.Unity.BuildSystem
 
 
         // Mac App Store
-        [MenuItem("File/uBuild/Build for Deployment/Mac App Store")]
+        [MenuItem("File/uBuild/Build for Deployment/Mac App Store", false, 200)]
         static void BuildForMacAppStore()
         {
             List<IModifier> modifiers = new List<IModifier>();
@@ -217,42 +230,41 @@ namespace dotBunny.Unity.BuildSystem
 
             routines.Add(new MacPListRoutine());
 
-            routines.Add(new MacAppStoreRoutine("reapazor", "staff"));
+            routines.Add(new MacAppStoreRoutine());
 
             Build.BuildPlayer(BuildTarget.StandaloneOSXIntel64, string.Empty, modifiers, routines);
         }
 
 
-        // Deployments
-        [MenuItem("File/uBuild/Deploy/Steam")]
-        public static void DeployToSteam()
-        {
-            SteamDeployment steam = new SteamDeployment();
-            steam.Process();
-        }
 
-        [MenuItem("File/uBuild/Deploy/Mac App Store")]
-        public static void DeployToMacAppStore()
-        {
-            MacAppStoreDeployment macstore = new MacAppStoreDeployment();
-            macstore.Process();
-        }
 
         // Build & Deploy
-        [MenuItem("File/uBuild/Build and Deploy/Steam")]
+        [MenuItem("File/uBuild/Build and Deploy/Steam", false, 300)]
         public static void BuildForSteamAndDeploy()
         {
             BuildForSteamGroup();
             DeployToSteam();
         }
-
-
-        [MenuItem("File/uBuild/Build and Deploy/Mac App Store")]
+        [MenuItem("File/uBuild/Build and Deploy/Mac App Store", false, 300)]
         public static void BuildForMacAppStoreAndDeploy()
         {
             BuildForMacAppStore();
             DeployToMacAppStore();
         }
 
+
+        // Deployments
+        [MenuItem("File/uBuild/Deploy/Steam", false, 300)]
+        public static void DeployToSteam()
+        {
+            SteamDeployment steam = new SteamDeployment();
+            steam.Process();
+        }
+        [MenuItem("File/uBuild/Deploy/Mac App Store", false, 300)]
+        public static void DeployToMacAppStore()
+        {
+            MacAppStoreDeployment macstore = new MacAppStoreDeployment();
+            macstore.Process();
+        }
     }
 }

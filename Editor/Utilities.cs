@@ -44,6 +44,15 @@ namespace dotBunny.Unity.BuildSystem
 
 
         }
+        
+        public static string GetBaseFolder(string path)
+        {
+            if ( String.IsNullOrEmpty(path) || path.Length == 0 || path.LastIndexOf("/") == -1 ) {
+                return Build.ProjectFolder;
+            } else {
+                return path.Substring(0, path.LastIndexOf("/"));
+            }
+        }
 
         public static string GetAbsolutePath(string relativePath)
         {
